@@ -23,6 +23,7 @@ class RedInvader:
         self.move_sound.set_volume(0.05)
         self.hit_sound = pygame.mixer.Sound(os.path.join("assets/sounds", "InvaderHit.wav"))
         self.hit_sound.set_volume(0.5)
+        self.sound_playing = False
 
     def draw(self):
         self.game.screen.blit(self.pic, (self.x, self.y))
@@ -38,6 +39,7 @@ class RedInvader:
             if rocket.mask.overlap(self.mask, (int(offset_x), int(offset_y))) is not None:
                 try:
                     self.move_sound.stop()
+                    self.sound_playing = False
                     self.hit_sound.play()
                     game.player_rockets.remove(rocket)
                     game.player.score += self.level
@@ -45,14 +47,23 @@ class RedInvader:
                 except Exception:
                     break
 
-    def generate_red_invader(self, game):
-        self.move_sound.play(-1)
+    def generate_red_invader(self, game, game_stopped=False):
+        self.play_sound()
         self.draw()
         self.Move(game)
         if self.checkCollision(game) or self.x > game.width or self.y > game.height:
             self.move_sound.stop()
+            self.sound_playing = False
             return self.choose_side(game)
+        if game_stopped:
+            self.move_sound.stop()
+            self.sound_playing = False
         return 0, 0
+
+    def play_sound(self):
+        if not self.sound_playing:
+            self.move_sound.play(-1)
+            self.sound_playing = True
 
     def choose_side(self, game):
         x = random.choice((-72, game.width + 72))

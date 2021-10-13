@@ -53,6 +53,7 @@ class DeadScreen:
                     self.click_sound.play()
                     self.running = False
                 if event.type == pygame.QUIT:
+                    self.menu.running = False
                     self.running = False
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 1:

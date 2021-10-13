@@ -74,7 +74,7 @@ class Game:
             for alien in self.aliens:
                 alien.draw()
                 alien.checkCollision(self)
-                if (alien.y > self.block_generator.height - 20):
+                if (alien.y > self.block_generator.height - 40):
                     self.stop_game()
 
             self.generator.shoot(self.alien_rocket, self.aliens)
@@ -111,6 +111,7 @@ class Game:
         self.block_frames.clear()
         self.player_rockets.clear()
         self.alien_rocket.clear()
+        self.redInvaders.generate_red_invader(self, True)
 
     def draw_bottom_line(self):
         self.display_text(f"Score : {self.player.score}", 39, (self.width - 200), (self.height - 22), self.screen)
