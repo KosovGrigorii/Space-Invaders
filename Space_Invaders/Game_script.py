@@ -102,6 +102,10 @@ class Game:
                 self.stop_game()
                 self.menu_running = False
 
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                self.click_sound.play()
+                self.stop_game()
+
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                 self.player_rockets.append(Rocket(self, self.player.x + 30, self.player.y, "Player"))
 
